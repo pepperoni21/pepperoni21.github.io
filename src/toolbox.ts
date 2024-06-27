@@ -4,6 +4,7 @@ import { isLookingAt } from "./raycasting";
 import { currentGUI } from "./gui";
 import { scene } from "./scene";
 import { clearTooltip, setTooltipWithPressE } from "./tooltip";
+import { decreaseLoadingCount } from "./loading";
 
 const gltfLoader = new GLTFLoader();
 gltfLoader.setPath("assets/toolbox/");
@@ -31,7 +32,8 @@ export function loadToolbox() {
         });
         toolbox.position.set(2.8, 0.2, 0.5);
         toolbox.rotateY(-Math.PI / 2)
-        scene.add(toolbox)
+        scene.add(toolbox);
+        decreaseLoadingCount();
     })
 
     document.addEventListener('keypress', event => {

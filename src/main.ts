@@ -3,7 +3,6 @@ import { loadSky } from './sky';
 import { loadCamera, loadControls } from './camera';
 import { loadAudio } from './audio';
 import "../styles/app.css";
-import { initInstructions } from './instructions';
 import { scene } from './scene';
 import { handleWalletRendering, loadWallet, wallet } from './wallet';
 import { initTooltip } from './tooltip';
@@ -13,6 +12,7 @@ import { handleMCBlockRendering, loadMCBlock, mcblock } from './mcblock';
 import { handleMailboxRendering, loadMailbox, mailbox } from './mailbox';
 import { initCrosshair } from './crosshair';
 import { handleToolboxRendering, loadToolbox, toolbox } from './toolbox';
+import { initLoadingScreen } from './loading';
 
 
 loadSky();
@@ -28,7 +28,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 export const camera = loadCamera();
 
 document.body.appendChild(renderer.domElement);
-initInstructions();
+initLoadingScreen();
 initTooltip();
 initCrosshair();
 

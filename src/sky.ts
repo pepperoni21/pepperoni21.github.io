@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { scene } from './scene';
+import { decreaseLoadingCount } from './loading';
 
 export function loadSky() {
     const cubeTextureLoader = new THREE.CubeTextureLoader();
@@ -10,4 +11,5 @@ export function loadSky() {
     "_front.png", "_back.png"
     ]);
     scene.background = textureCube;
+    decreaseLoadingCount();
 }

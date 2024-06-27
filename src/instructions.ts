@@ -7,7 +7,7 @@ export function initInstructions() {
     document.body.appendChild(instructionsElement);
 
     instructionsElement.addEventListener('click', function() {
-        instructionsElement.style.display = 'none';
+        hideElement(instructionsElement);
         let eyeElement = generateEyeElement();
         document.body.appendChild(eyeElement);
         eyeElement.addEventListener("animationend", _ => {
@@ -22,11 +22,9 @@ function generateInstructionsElement() {
     let instructionsElement = document.createElement('div');
     instructionsElement.id = 'instructions';
     instructionsElement.innerHTML = `
-    <div id="instructions">
-      <h1>
-        Click to start
-      </h1>
-    </div>
+    <h1>
+      Click to start
+    </h1>
     `;
     return instructionsElement;
 }

@@ -14,6 +14,7 @@ export function loadAudio(camera: THREE.PerspectiveCamera) {
         backgroundSound.setLoop(true);
         backgroundSound.setVolume(0.05);
         backgroundSound.play();
+        
     });
     audioLoader.load("fire.mp3", function(buffer) {
         fireSound.setBuffer(buffer);

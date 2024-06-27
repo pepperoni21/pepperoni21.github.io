@@ -3,6 +3,7 @@ import * as THREE from "three";
 import { scene } from "./scene";
 import { isLookingAt } from "./raycasting";
 import { clearTooltip, setTooltipWithPressE } from "./tooltip";
+import { decreaseLoadingCount } from "./loading";
 
 const gltfLoader = new GLTFLoader();
 gltfLoader.setPath("assets/credits/");
@@ -31,6 +32,7 @@ export function loadCredits() {
         credits.position.set(-0.5, 0.3, -0.3);
         credits.scale.set(0.1, 0.1, 0.1);
         scene.add(credits)
+        decreaseLoadingCount();
     })
 }
 

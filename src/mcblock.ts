@@ -5,6 +5,7 @@ import { GUI, currentGUI, openGUI } from "./gui";
 import { scene } from "./scene";
 import { clearTooltip, setTooltipWithPressE } from "./tooltip";
 import { playSound } from "./audio";
+import { decreaseLoadingCount } from "./loading";
 
 const gltfLoader = new GLTFLoader();
 gltfLoader.setPath("assets/mcblock/");
@@ -48,6 +49,7 @@ export function loadMCBlock() {
         mcblock.position.set(1.6, 0.2, 1.7);
         mcblock.scale.set(0.1, 0.1, 0.1);
         scene.add(mcblock)
+        decreaseLoadingCount();
     })
 
     document.addEventListener('keypress', event => {

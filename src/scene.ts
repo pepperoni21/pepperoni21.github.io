@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/Addons.js';
+import { decreaseLoadingCount } from './loading';
 
 export const scene = new THREE.Scene();
 const light = new THREE.AmbientLight(0xffffff, 1.5);
@@ -12,6 +13,7 @@ gltfLoader.load(
   "scene.gltf",
   function(gltf) {
     scene.add(gltf.scene)
+    decreaseLoadingCount();
   },
   function(_xhr) {
 

@@ -5,6 +5,7 @@ import { clearTooltip, setTooltipWithPressE } from "./tooltip";
 import { isLookingAt } from "./raycasting";
 import { GUI, currentGUI, openGUI } from "./gui";
 import { createImg, createLinkDiv } from "./utils";
+import { decreaseLoadingCount } from "./loading";
 
 const gltfLoader = new GLTFLoader();
 gltfLoader.setPath("assets/mailbox/");
@@ -52,6 +53,7 @@ export function loadMailbox() {
         mailbox.scale.set(0.008, 0.008, 0.008);
         mailbox.rotateY(Math.PI + 0.2);
         scene.add(mailbox)
+        decreaseLoadingCount();
     })
 
     document.addEventListener('keypress', event => {

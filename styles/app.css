@@ -3,11 +3,11 @@ body {
     position: relative;
 }
 
-body canvas, #instructions, .gui {
+body canvas, #instructions, .gui, #loading {
     position: absolute;
 }
 
-#instructions {
+#instructions, #loading {
     width: 100vw;
     height: 100vh;
     background-color: black;
@@ -15,7 +15,7 @@ body canvas, #instructions, .gui {
     display: flex;
 }
 
-#instructions h1 {
+#instructions h1, #loading h1 {
     color: white;
     justify-content: center;
     align-items: center;
