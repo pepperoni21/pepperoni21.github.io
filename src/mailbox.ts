@@ -6,6 +6,7 @@ import { isLookingAt } from "./raycasting";
 import { GUI, currentGUI, handleInteraction, openGUI } from "./gui";
 import { createImg, createLinkDiv } from "./utils";
 import { decreaseLoadingCount } from "./loading";
+import { clearOutline, outline } from "./outline";
 
 const gltfLoader = new GLTFLoader();
 gltfLoader.setPath("assets/mailbox/");
@@ -35,21 +36,7 @@ const gui = new GUI("contact", [img, contactDiv])
 export function loadMailbox() {
     gltfLoader.load("scene.gltf", function(gltf) {
         mailbox = gltf.scene;
-        mailbox.traverse(function(child) {
-            if(child instanceof THREE.Mesh) {
-                let material = (child as THREE.Mesh).material;
-                if(material instanceof Array) {
-                    for(let i = 0; i < material.length; i++) {
-                        (material[i] as THREE.MeshStandardMaterial).emissive = new THREE.Color(0xffffff);
-                        (material[i] as THREE.MeshStandardMaterial).emissiveIntensity = 0;
-                    }
-                } else {
-                    (material as THREE.MeshStandardMaterial).emissive = new THREE.Color(0xffffff);
-                    (material as THREE.MeshStandardMaterial).emissiveIntensity = 0;
-                }
-            }
-        });
-        mailbox.position.set(1.5, -0.2, 2.8);
+        mailbox.position.set(1.5, -0.1, 2.8);
         mailbox.scale.set(0.008, 0.008, 0.008);
         mailbox.rotateY(Math.PI + 0.2);
         scene.add(mailbox)
@@ -78,36 +65,14 @@ export function handleMailboxRendering() {
 }
 
 function highlight() {
-    mailbox.traverse(function(child) {
-        if(child instanceof THREE.Mesh) {
-            let material = (child as THREE.Mesh).material;
-            if(material instanceof Array) {
-                for(let i = 0; i < material.length; i++) {
-                    (material[i] as THREE.MeshStandardMaterial).emissiveIntensity = 0.2;
-                }
-            } else {
-                (material as THREE.MeshStandardMaterial).emissiveIntensity = 0.2;
-            }
-        }
-    });
     isHighlighted = true;
 
+    outline(mailbox);
     setTooltipWithPressE("Contact");
 }
 
 function unhighlight() {
-    mailbox.traverse(function(child) {
-        if(child instanceof THREE.Mesh) {
-            let material = (child as THREE.Mesh).material;
-            if(material instanceof Array) {
-                for(let i = 0; i < material.length; i++) {
-                    (material[i] as THREE.MeshStandardMaterial).emissiveIntensity = 0;
-                }
-            } else {
-                (material as THREE.MeshStandardMaterial).emissiveIntensity = 0;
-            }
-        }
-    });
+    clearOutline();
     isHighlighted = false;
     clearTooltip();
 }

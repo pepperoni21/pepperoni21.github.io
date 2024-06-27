@@ -5,6 +5,7 @@ import { isLookingAt } from "./raycasting";
 import { clearTooltip, setTooltipWithPressE } from "./tooltip";
 import { GUI, currentGUI, handleInteraction, openGUI } from "./gui";
 import { playSound } from "./audio";
+import { clearOutline, outline } from "./outline";
 
 const gltfLoader = new GLTFLoader();
 gltfLoader.setPath("assets/wallet/");
@@ -22,20 +23,6 @@ const gui = new GUI("idcard", [img])
 export function loadWallet() {
     gltfLoader.load("scene.gltf", function(gltf) {
         wallet = gltf.scene;
-        wallet.traverse(function(child) {
-            if(child instanceof THREE.Mesh) {
-                let material = (child as THREE.Mesh).material;
-                if(material instanceof Array) {
-                    for(let i = 0; i < material.length; i++) {
-                        (material[i] as THREE.MeshStandardMaterial).emissive = new THREE.Color(0xffffff);
-                        (material[i] as THREE.MeshStandardMaterial).emissiveIntensity = 0;
-                    }
-                } else {
-                    (material as THREE.MeshStandardMaterial).emissive = new THREE.Color(0xffffff);
-                    (material as THREE.MeshStandardMaterial).emissiveIntensity = 0;
-                }
-            }
-        });
         wallet.position.set(1.05, 0.2, 0.8);
         wallet.scale.set(0.03, 0.03, 0.03);
         scene.add(wallet)
@@ -65,36 +52,15 @@ export function handleWalletRendering() {
 }
 
 function highlight() {
-    wallet.traverse(function(child) {
-        if(child instanceof THREE.Mesh) {
-            let material = (child as THREE.Mesh).material;
-            if(material instanceof Array) {
-                for(let i = 0; i < material.length; i++) {
-                    (material[i] as THREE.MeshStandardMaterial).emissiveIntensity = 0.2;
-                }
-            } else {
-                (material as THREE.MeshStandardMaterial).emissiveIntensity = 0.2;
-            }
-        }
-    });
     isHighlighted = true;
+
+    outline(wallet);
 
     setTooltipWithPressE("About me");
 }
 
 function unhighlight() {
-    wallet.traverse(function(child) {
-        if(child instanceof THREE.Mesh) {
-            let material = (child as THREE.Mesh).material;
-            if(material instanceof Array) {
-                for(let i = 0; i < material.length; i++) {
-                    (material[i] as THREE.MeshStandardMaterial).emissiveIntensity = 0;
-                }
-            } else {
-                (material as THREE.MeshStandardMaterial).emissiveIntensity = 0;
-            }
-        }
-    });
     isHighlighted = false;
+    clearOutline();
     clearTooltip();
 }

@@ -13,6 +13,7 @@ import { handleMailboxRendering, loadMailbox, mailbox } from './mailbox';
 import { initCrosshair } from './crosshair';
 import { handleToolboxRendering, loadToolbox, toolbox } from './toolbox';
 import { initLoadingScreen } from './loading';
+import { composer, initOutline } from './outline';
 
 
 loadSky();
@@ -31,6 +32,7 @@ document.body.appendChild(renderer.domElement);
 initLoadingScreen();
 initTooltip();
 initCrosshair();
+initOutline();
 
 function animate() {
   renderer.render(scene, camera);
@@ -40,6 +42,8 @@ function animate() {
   if(mcblock) handleMCBlockRendering();
   if(mailbox) handleMailboxRendering();
   if(toolbox) handleToolboxRendering();
+
+  composer.render();
 }
 
 renderer.setAnimationLoop(animate);

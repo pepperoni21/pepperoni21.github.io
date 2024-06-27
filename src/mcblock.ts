@@ -6,6 +6,7 @@ import { scene } from "./scene";
 import { clearTooltip, setTooltipWithPressE } from "./tooltip";
 import { playSound } from "./audio";
 import { decreaseLoadingCount } from "./loading";
+import { clearOutline, outline } from "./outline";
 
 const gltfLoader = new GLTFLoader();
 gltfLoader.setPath("assets/mcblock/");
@@ -32,20 +33,6 @@ const gui = new GUI("mcbook", [img, discordLink])
 export function loadMCBlock() {
     gltfLoader.load("scene.gltf", function(gltf) {
         mcblock = gltf.scene;
-        mcblock.traverse(function(child) {
-            if(child instanceof THREE.Mesh) {
-                let material = (child as THREE.Mesh).material;
-                if(material instanceof Array) {
-                    for(let i = 0; i < material.length; i++) {
-                        (material[i] as THREE.MeshStandardMaterial).emissive = new THREE.Color(0xffffff);
-                        (material[i] as THREE.MeshStandardMaterial).emissiveIntensity = 0;
-                    }
-                } else {
-                    (material as THREE.MeshStandardMaterial).emissive = new THREE.Color(0xffffff);
-                    (material as THREE.MeshStandardMaterial).emissiveIntensity = 0;
-                }
-            }
-        });
         mcblock.position.set(1.6, 0.2, 1.7);
         mcblock.scale.set(0.1, 0.1, 0.1);
         scene.add(mcblock)
@@ -76,36 +63,15 @@ export function handleMCBlockRendering() {
 }
 
 function highlight() {
-    mcblock.traverse(function(child) {
-        if(child instanceof THREE.Mesh) {
-            let material = (child as THREE.Mesh).material;
-            if(material instanceof Array) {
-                for(let i = 0; i < material.length; i++) {
-                    (material[i] as THREE.MeshStandardMaterial).emissiveIntensity = 0.2;
-                }
-            } else {
-                (material as THREE.MeshStandardMaterial).emissiveIntensity = 0.2;
-            }
-        }
-    });
     isHighlighted = true;
 
     setTooltipWithPressE("Me & Minecraft");
+
+    outline(mcblock);
 }
 
 function unhighlight() {
-    mcblock.traverse(function(child) {
-        if(child instanceof THREE.Mesh) {
-            let material = (child as THREE.Mesh).material;
-            if(material instanceof Array) {
-                for(let i = 0; i < material.length; i++) {
-                    (material[i] as THREE.MeshStandardMaterial).emissiveIntensity = 0;
-                }
-            } else {
-                (material as THREE.MeshStandardMaterial).emissiveIntensity = 0;
-            }
-        }
-    });
     isHighlighted = false;
     clearTooltip();
+    clearOutline();
 }
