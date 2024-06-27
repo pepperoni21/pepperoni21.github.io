@@ -3,7 +3,7 @@ import { scene } from "./scene";
 import * as THREE from "three";
 import { isLookingAt } from "./raycasting";
 import { clearTooltip, setTooltipWithPressE } from "./tooltip";
-import { GUI, currentGUI, openGUI } from "./gui";
+import { GUI, currentGUI, handleInteraction, openGUI } from "./gui";
 import { playSound } from "./audio";
 
 const gltfLoader = new GLTFLoader();
@@ -41,15 +41,16 @@ export function loadWallet() {
         scene.add(wallet)
     })
 
-    document.addEventListener('keypress', event => {
-        if(event.key != 'e') return;
-        if(!isHighlighted) return;
-        if(currentGUI == null) {
-            if(openGUI(gui)) {
-                playSound("open_wallet.mp3")
-            }
+    handleInteraction(open)
+}
+
+function open() {
+    if(!isHighlighted) return;
+    if(currentGUI == null) {
+        if(openGUI(gui)) {
+            playSound("open_wallet.mp3")
         }
-    })
+    }
 }
 
 export function handleWalletRendering() {

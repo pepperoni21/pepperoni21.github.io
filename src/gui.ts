@@ -28,6 +28,18 @@ document.addEventListener("keydown", event => {
     }
 });
 
+export function handleInteraction(callback: () => void) {
+    document.addEventListener("keypress", event => {
+        if(event.key != 'e') return;
+        callback();
+    })
+
+    document.addEventListener('click', event => {
+        if(event.button != 0) return;
+        callback();
+    });
+}
+
 export function openGUI(gui: GUI): boolean {
     if(guiCooldown) return false;
 

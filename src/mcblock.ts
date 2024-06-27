@@ -1,7 +1,7 @@
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
 import * as THREE from "three";
 import { isLookingAt } from "./raycasting";
-import { GUI, currentGUI, openGUI } from "./gui";
+import { GUI, currentGUI, handleInteraction, openGUI } from "./gui";
 import { scene } from "./scene";
 import { clearTooltip, setTooltipWithPressE } from "./tooltip";
 import { playSound } from "./audio";
@@ -52,15 +52,16 @@ export function loadMCBlock() {
         decreaseLoadingCount();
     })
 
-    document.addEventListener('keypress', event => {
-        if(event.key != 'e') return;
-        if(!isHighlighted) return;
-        if(currentGUI == null) {
-            if(openGUI(gui)) {
-                playSound("open_book.mp3");
-            }
+    handleInteraction(open);
+}
+
+function open() {
+    if(!isHighlighted) return;
+    if(currentGUI == null) {
+        if(openGUI(gui)) {
+            playSound("open_book.mp3");
         }
-    })
+    }
 }
 
 export function handleMCBlockRendering() {

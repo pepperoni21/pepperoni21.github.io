@@ -3,7 +3,7 @@ import * as THREE from "three";
 import { scene } from "./scene";
 import { clearTooltip, setTooltipWithPressE } from "./tooltip";
 import { isLookingAt } from "./raycasting";
-import { GUI, currentGUI, openGUI } from "./gui";
+import { GUI, currentGUI, handleInteraction, openGUI } from "./gui";
 import { createImg, createLinkDiv } from "./utils";
 import { decreaseLoadingCount } from "./loading";
 
@@ -56,13 +56,14 @@ export function loadMailbox() {
         decreaseLoadingCount();
     })
 
-    document.addEventListener('keypress', event => {
-        if(event.key != 'e') return;
-        if(!isHighlighted) return;
-        if(currentGUI == null) {
-            openGUI(gui);
-        }
-    })
+    handleInteraction(open);
+}
+
+function open() {
+    if(!isHighlighted) return;
+    if(currentGUI == null) {
+        openGUI(gui);
+    }
 }
 
 export function handleMailboxRendering() {
