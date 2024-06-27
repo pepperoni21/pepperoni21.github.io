@@ -50,6 +50,12 @@ export function openGUI(gui: GUI): boolean {
     document.body.appendChild(element);
     currentGUI = gui;
 
+    element.addEventListener("click", event => {
+        if(event.button != 0) return;
+        if(event.target != element) return;
+        closeGUI();
+    })
+
     hideElement(tooltipElement);
     hideElement(crosshairElement);
 

@@ -49,6 +49,21 @@ img {
     top: 50%;
 }
 
+#audio {
+    position: fixed;
+    right: 10px;
+    bottom: 20px;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+#audio_key {
+    font-size: 20px;
+}
+
 @keyframes fadeInAnimation {
     0% {
         opacity: 0;
